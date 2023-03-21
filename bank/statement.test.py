@@ -26,5 +26,14 @@ class TestStatement(unittest.TestCase):
         expected_output = "date || credit || debit || balance\n01/01/2023 || || 1.00 || 9.00\n01/01/2023 || 10.00 || || 10.00"
         self.assertEqual(statement.print_statement(), expected_output)
 
+    def test_prints_after_multiple_deposits(self):
+        transaction = Mock()
+        transaction.format_date.return_value = "01/01/2023"
+        transaction.format_amount.return_value = "5.00 ||"
+        account = Mock(get_transactions=lambda: [transaction, transaction, transaction], balance_at=lambda i: 5 if i == 0 else 10 if i == 1 else 15)
+        statement = Statement(account)
+        expected_output = "date || credit || debit || balance\n01/01/2023 || 5.00 || || 15.00\n01/01/2023 || 5.00 || || 10.00\n01/01/2023 || 5.00 || || 5.00"
+        self.assertEqual(statement.print_statement(), expected_output)
+
 if __name__ == '__main__':
     unittest.main()
