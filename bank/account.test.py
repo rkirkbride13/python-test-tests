@@ -1,8 +1,6 @@
 import unittest
 from unittest.mock import Mock
 from account import Account
-from unittest.mock import MagicMock
-
 
 class TestAccount(unittest.TestCase):
     def test_balance_of_zero_initially(self):
