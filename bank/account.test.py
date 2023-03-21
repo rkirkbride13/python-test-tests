@@ -46,6 +46,13 @@ class TestAccount(unittest.TestCase):
         self.assertEqual(account.latest_balance(), 2.00)
 
 
+    def test_error_raised_if_insufficient_funds(self):
+        account = Account()
+        transaction1 = Mock(amount=10, date='01/01/2023')
+        transaction2 = Mock(amount=-100, date='01/01/2023')
+        account.add_transaction(transaction1)
+        with self.assertRaises(Exception):
+            account.add_transaction(transaction2)
 
 if __name__ == '__main__':
     unittest.main()

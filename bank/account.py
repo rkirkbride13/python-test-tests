@@ -5,7 +5,8 @@ class Account:
 
     def add_transaction(self, transaction):
         self.transactions.append(transaction)
-        return self.transactions
-    
+        if self.latest_balance() < 0:
+            raise Exception('Insufficient funds') 
+   
     def latest_balance(self):
         return sum([transaction.amount for transaction in self.transactions])
