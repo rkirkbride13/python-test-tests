@@ -35,5 +35,20 @@ class TestStatement(unittest.TestCase):
         expected_output = "date || credit || debit || balance\n01/01/2023 || 5.00 || || 15.00\n01/01/2023 || 5.00 || || 10.00\n01/01/2023 || 5.00 || || 5.00"
         self.assertEqual(statement.print_statement(), expected_output)
 
+    def test_prints_after_multiple_withdrawals(self):
+        transaction1 = Mock()
+        transaction1.format_date.return_value = "01/01/2023"
+        transaction1.format_amount.return_value = "45.00 ||"
+        transaction2 = Mock()
+        transaction2.format_date.return_value = "01/01/2023"
+        transaction2.format_amount.return_value = "|| 10.00"
+        transaction3 = Mock()
+        transaction3.format_date.return_value = "01/01/2023"
+        transaction3.format_amount.return_value = "|| 25.00"
+        account = Mock(get_transactions=lambda: [transaction1, transaction2, transaction3], balance_at=lambda i: 45 if i == 0 else 35 if i == 1 else 10)
+        statement = Statement(account)
+        expected_output = "date || credit || debit || balance\n01/01/2023 || || 25.00 || 10.00\n01/01/2023 || || 10.00 || 35.00\n01/01/2023 || 45.00 || || 45.00"
+        self.assertEqual(statement.print_statement(), expected_output)
+
 if __name__ == '__main__':
     unittest.main()
