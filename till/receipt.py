@@ -6,5 +6,7 @@ class Receipt:
       self.order = order
 
     def print_receipt(self):
-       items = self.order.list_items()[0]
-       return f"{items[0]:24}{items[1]} x {items[2]}\n"
+       items = self.order.list_items()
+       for item in items:
+          self.receipt.append(f"{item[0]:24}{item[1]} x {item[2]}\n")
+       return ''.join(self.receipt)
