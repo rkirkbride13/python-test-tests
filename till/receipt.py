@@ -6,6 +6,8 @@ class Receipt:
       self.order = order
 
     def print_receipt(self, tax):
+       self.receipt.append(f"{self.order.get_date()}\n")
+       self.receipt.append(f"{self.order.get_name()}\n")
        items = self.order.list_items()
        for item in items:
           self.receipt.append(f"{item[0]:24}{item[1]} x {item[2]}\n")
