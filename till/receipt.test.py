@@ -76,5 +76,16 @@ class TestReceipt(unittest.TestCase):
         self.assertIn("Robbie\n", receipt.print_receipt(8.5))
         self.assertIn("22/03/2023 10:36:01\n", receipt.print_receipt(8.5))
 
+    def test_full_printed_receipt(self):
+        order = Mock()
+        order.get_name.return_value = "Robbie"
+        order.get_date.return_value = "22/03/2023 10:36:01"
+        order.list_items.return_value = [['Tea', 1, 3.65], ['Cortado', 1, 4.55]]
+        order.calc_tax.return_value = 0.70
+        order.calc_bill.return_value = 8.90
+        receipt = Receipt()
+        receipt.add_order(order)
+        self.assertEqual(receipt.print_receipt(8.5), "22/03/2023 10:36:01\nRobbie\nTea                     1 x 3.65\nCortado                 1 x 4.55\nTax                     $0.70\nTotal                   $8.90\n")
+
 if __name__ == '__main__':
     unittest.main()
