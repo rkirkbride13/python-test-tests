@@ -61,5 +61,16 @@ class TestOrder(unittest.TestCase):
         order.add_item(item)
         self.assertEqual(order.calc_tax(8.5), 0.70)
 
+    def test_total_final_bill(self):
+        item = Mock()
+        item.get_name.return_value = 'Tea'
+        item.get_price.return_value = 3.65
+        order = Order()
+        order.add_item(item)
+        item.get_name.return_value = 'Cortado'
+        item.get_price.return_value = 4.55
+        order.add_item(item)
+        self.assertEqual(order.calc_bill(8.5), 8.90)
+
 if __name__ == '__main__':
     unittest.main()

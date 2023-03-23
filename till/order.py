@@ -29,3 +29,7 @@ class Order:
 
     def calc_tax(self, tax):
         return round(self.item_total() * tax/100, 2)
+    
+    def calc_bill(self, tax):
+        total = self.item_total() + self.calc_tax(tax)
+        return round(total, 2)
