@@ -39,5 +39,16 @@ class TestOrder(unittest.TestCase):
         order.add_item(item)
         self.assertEqual(order.list_items(), [['Tea', 2, 3.65]])
 
+    def test_total_price_of_order(self):
+        item = Mock()
+        item.get_name.return_value = 'Tea'
+        item.get_price.return_value = 3.65
+        order = Order()
+        order.add_item(item)
+        item.get_name.return_value = 'Cortado'
+        item.get_price.return_value = 4.55
+        order.add_item(item)
+        self.assertEqual(order.item_total(), 8.2)
+
 if __name__ == '__main__':
     unittest.main()

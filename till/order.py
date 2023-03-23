@@ -20,3 +20,9 @@ class Order:
 
     def list_items(self):
         return self.order
+
+    def item_total(self):
+        item_total = 0
+        for item in self.order:
+            item_total += item[1] * item[2]
+        return item_total
