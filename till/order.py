@@ -26,3 +26,6 @@ class Order:
         for item in self.order:
             item_total += item[1] * item[2]
         return item_total
+
+    def calc_tax(self, tax):
+        return round(self.item_total() * tax/100, 2)

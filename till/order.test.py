@@ -50,5 +50,16 @@ class TestOrder(unittest.TestCase):
         order.add_item(item)
         self.assertEqual(order.item_total(), 8.2)
 
+    def test_tax_on_order(self):
+        item = Mock()
+        item.get_name.return_value = 'Tea'
+        item.get_price.return_value = 3.65
+        order = Order()
+        order.add_item(item)
+        item.get_name.return_value = 'Cortado'
+        item.get_price.return_value = 4.55
+        order.add_item(item)
+        self.assertEqual(order.calc_tax(8.5), 0.70)
+
 if __name__ == '__main__':
     unittest.main()
