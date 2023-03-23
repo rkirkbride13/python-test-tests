@@ -1,7 +1,10 @@
+import datetime
+
 class Order:
-    
+  
     def __init__(self):
         self.order = []
+        self.date = datetime.datetime.now()
 
     def set_name(self, name = '-'):
         self.name = name
@@ -33,3 +36,6 @@ class Order:
     def calc_bill(self, tax):
         total = self.item_total() + self.calc_tax(tax)
         return round(total, 2)
+    
+    def get_date(self):
+        return self.date.strftime("%d/%m/%Y %H:%M:%S")

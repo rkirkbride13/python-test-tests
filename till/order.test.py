@@ -1,6 +1,8 @@
 import unittest
 from order import Order
 from unittest.mock import Mock
+from datetime import datetime
+from freezegun import freeze_time
 
 
 class TestOrder(unittest.TestCase):
@@ -71,6 +73,12 @@ class TestOrder(unittest.TestCase):
         item.get_price.return_value = 4.55
         order.add_item(item)
         self.assertEqual(order.calc_bill(8.5), 8.90)
+
+    @freeze_time("2023-03-22 10:36:01")
+    def test_date_added_on_init(self):
+        
+        order = Order()
+        self.assertEqual(order.get_date(), '22/03/2023 10:36:01')
 
 if __name__ == '__main__':
     unittest.main()
